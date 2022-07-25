@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "types": ["jest", "node"],
+    "typeRoots": ["@types", "node_modules/@types"],
+  },
+  "include": ["src/**/*.ts", "@types/**/*", "tests/**/*"],
+  "exclude": ["node_modules"]
+}
