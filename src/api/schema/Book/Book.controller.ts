@@ -2,11 +2,11 @@ import { dataServices } from "~/api/Services";
 
 class BookController {
   public getBooks = () => {
-    // BookModel.findAll({ id2: "2" });
+    dataServices.books?.findAll({ id: "1" });
   };
 
-  public getBookById = (input: any) => {
-    dataServices.books?.findAll({ id: input.id });
+  public getBookById = () => {
+    dataServices.books?.findOne({ id: "1" });
   };
 }
 

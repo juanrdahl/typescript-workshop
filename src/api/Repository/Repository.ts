@@ -1,6 +1,6 @@
 import { RepositoryError } from "./Repository.error";
 
-class Repository<T extends CommonJSON> {
+class Repository<T = CommonJSON> {
   /**
    * Represents a table in db to simplify example
    */
@@ -10,15 +10,29 @@ class Repository<T extends CommonJSON> {
     this.db = [];
   }
 
+  /**
+   * Find the first element which matches with the param
+   * @param where implementation with CommonJSON
+   * @returns T | undefined
+   */
   public findOne = (where: CommonJSON): T | undefined => {
     return this.db.find((item: T) => {
-      return Object.entries(where).every(([key, value]) => item[key] === value);
+      return Object.entries(where).every(
+        ([key, value]) => item[key as keyof T] === value
+      );
     });
   };
 
+  /**
+   * Find all the elements which match with the param
+   * @param where implementation with generics types
+   * @returns T[]
+   */
   public findAll = (where: TWhere<T>): T[] => {
     return this.db.filter((item: T) => {
-      return Object.entries(where).every(([key, value]) => item[key] === value);
+      return Object.entries(where).every(
+        ([key, value]) => item[key as keyof T] === value
+      );
     });
   };
 
@@ -32,16 +46,16 @@ class Repository<T extends CommonJSON> {
   };
 
   /**
-   * Edit some props in a book if it is not already storaged
-   * @param book new book posted
-   * @returs
+   * Edit some props in a model T if it is already storaged.
+   * The id is needed in the param
+   * @param model
+   * @returs void
    */
-  public updateById = (model: TUpdate<T>) => {
+  public updateById = (model: TUpdate<T>): void => {
     const item = this.findOne({ id: model.id });
     if (!item) {
       throw new Error(RepositoryError.NOT_FOUND);
     }
-    this.deleteById(model.id);
 
     const changes = Object.entries(model).reduce(
       (acc: TUpdate<T>, [key, value]) => {
@@ -54,21 +68,24 @@ class Repository<T extends CommonJSON> {
     );
     const newItem = { ...item, ...changes };
 
-    this.db.push(newItem);
+    this.deleteById(model.id);
+    this.create(newItem);
   };
 
   /**
-   * Edit some props in a book if it is not already storaged
-   * @param book new book posted
+   * Edit some props in a model if it is not already storaged
+   * @param modelId uuid
    * @returs
    */
   public deleteById = (modelId: string) => {
-    const foundIndex = this.db.findIndex((item) => item.id === modelId);
+    const foundIndex = this.db.findIndex(
+      (item: CommonJSON) => item.id === modelId
+    );
     if (foundIndex === -1) {
       throw new Error(RepositoryError.NOT_FOUND);
     }
 
-    this.db = [...this.db.slice(foundIndex)];
+    this.db.splice(foundIndex, 1);
   };
 }
 

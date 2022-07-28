@@ -1,6 +1,6 @@
-import { Language } from "web/enums/Language";
-import { en, es } from "web/locales";
-import { LocaleType } from "web/locales/types";
+import { Language } from "../enums/Language";
+import { en, es } from "../locales";
+import { LocaleType } from "../locales/types";
 
 const lang: Language = Language.EN as Language;
 

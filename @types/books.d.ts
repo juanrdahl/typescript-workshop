@@ -7,7 +7,6 @@ interface LanguageEnum {
 
 interface Book {
   id: string;
-  // autor: User;
   authorId: string;
   title: string;
   description: string;
@@ -18,7 +17,3 @@ interface Book {
 type CreateBook = Book;
 
 type UpdateBook = MyPartialTypeForEdit<Book>;
-
-// interface UpdateBook extends Partial<Omit<Book, 'id'>> {
-//     id: string;
-// };
