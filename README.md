@@ -15,3 +15,13 @@ The purpose of this repository is to analyse how to use some features of Typescr
 - Execute the tests: `npm run test`
 - Check linter errors: `npm run lint`
 - Fix linter errors: `npm run lint:fix`
+
+## Diagrams
+
+A typical web architecture with a component with shared and centralized types.
+
+![Esta es una imagen](./images/client-server-diagram.png)
+
+
+
+![Esta es una imagen](./images/server-diagram.jpeg)
